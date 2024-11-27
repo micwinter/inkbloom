@@ -1,5 +1,5 @@
 *.epub
-
+images/*
 
 
 # Byte-compiled / optimized / DLL files
