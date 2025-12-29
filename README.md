@@ -1,19 +1,24 @@
 # inkbloom
 
-Package that allows users to add illustrations to their ebooks. The software produces consistent illustrations showing characters and scenes seamlessly throughout the book.
+Inkbloom is a package that allows users to add illustrations to their (open, non-kindle) ebooks. The software produces consistent illustrations showing characters and scenes seamlessly throughout the book.
 
 ## Overview
 
-Inkbloom uses AI to automatically generate and insert illustrations into EPUB ebooks. It analyzes each chapter to extract character and scene descriptions, then generates contextually appropriate images in your chosen style.
+Inkbloom uses a generative image model to automatically generate and insert illustrations into EPUB ebooks. It analyzes each chapter to extract character and scene descriptions, then generates contextually appropriate images in your chosen style.
+
+Example expired U.S. Copyright epubs are included in the repo to play with, from Project Gutenberg.
+
+Here are some example chapter illustrations created by DALL-E 3 for Grimm's Fairy Tales.
+    <img src="resources/chapter_0_illustration.png" width="50%" alt="Generated Illustration for Grimm's Fairy Tales Chapter 0" />
+    <img src="resources/chapter_3_illustration.png" width="50%" alt="Generated Illustration for Grimm's Fairy Tales Chapter 3" />
 
 ## Features
 
-- Automatically extracts character and scene descriptions from chapters
-- Generates AI illustrations using DALL-E 3
+- Automatically extracts character and scene descriptions from chapters using Anthropic's Claude
+- Generates AI illustrations using OpenAI's DALL-E 3
 - Maintains consistency across illustrations throughout the book
 - Supports custom illustration styles
 - Creates a new EPUB with illustrations embedded
-- Child-friendly content filtering
 
 ## Requirements
 
@@ -103,7 +108,7 @@ During execution, the following files are created:
 - API rate limits may affect processing speed
 - Image generation costs apply based on OpenAI pricing
 
-## Future Improvements
+## Ideas for Future Improvements
 
 - Support for different ebook formats
 - Multi-language support with translation
