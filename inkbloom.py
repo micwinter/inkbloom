@@ -30,6 +30,7 @@ class EpubReader:
     def __init__(
         self,
         ebook_filepath: str,
+        style: str,
     ):
         self.ebook_filepath = ebook_filepath
         self.book = epub.read_epub(ebook_filepath)
@@ -37,6 +38,7 @@ class EpubReader:
         self.batch_size = 16
         self.load_keys()
         self.description_dict = {}
+        self.style = style
 
     def load_keys(self):
         """Load API keys"""
@@ -83,7 +85,7 @@ class EpubReader:
     def extract_chapter_info(self, chapter):
         client = anthropic.Anthropic(api_key=self.claude_key)
         self.extracted_info = []
-        
+
         starter_text = """What are the physical descriptions of characters in the
                             following book chapter? Rewrite
                             descriptions such that they would be appropriate for
@@ -113,7 +115,7 @@ class EpubReader:
         )
         # Add to dictionary
         # Load the YAML text into a Python dictionary
-        data = yaml.safe_load(message.content[0].text)
+        # data = yaml.safe_load(message.content[0].text)
 
         # Convert the structured format to the desired dictionary format
         # self.description_dict = {
@@ -148,8 +150,8 @@ class EpubReader:
             messages=[{"role": "user", "content": [{"type": "text", "text": query}]}],
         )
 
-        gen_prompt = """Use the following description
-                        to generate an image of a scene in an old black and white drawing
+        gen_prompt = f"""Use the following description
+                        to generate an image of a scene in a {self.style}
                         style. Avoid any content that may be considered inappropriate or
                         offensive, ensuring the image aligns with content policies. Description:"""
 
@@ -272,16 +274,18 @@ class EpubReader:
         self.new_book.spine = self.book.spine
         epub.write_epub(new_epub_filename, self.new_book)
 
+
 if __name__ == "__main__":
 
     import argparse
 
     parser = argparse.ArgumentParser()
     parser.add_argument("ebook")
+    parser.add_argument('style')
 
     args = parser.parse_args()
 
-    ereader = EpubReader(args.ebook)
+    ereader = EpubReader(args.ebook, args.style)
     ereader.generate_new_book(use_existing_illustrations=False)
 
     # change out filename
