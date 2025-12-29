@@ -1,70 +1,87 @@
-# inkbloom
+# 🎨 inkbloom
 
-Inkbloom is a package that allows users to add illustrations to their (open, non-kindle) ebooks. The software produces consistent illustrations showing characters and scenes seamlessly throughout the book.
+> Transform your ebooks into illustrated masterpieces using AI
 
-## Overview
+Inkbloom automatically generates and inserts contextually appropriate illustrations into EPUB ebooks, bringing stories to life with consistent, beautiful artwork.
 
-Inkbloom uses a generative image model to automatically generate and insert illustrations into EPUB ebooks. It analyzes each chapter to extract character and scene descriptions, then generates contextually appropriate images in your chosen style.
+---
 
-Example expired U.S. Copyright epubs are included in the repo to play with, from Project Gutenberg.
+## ✨ Overview
 
-Here are some example chapter illustrations created by DALL-E 3 for Grimm's Fairy Tales.
-    <img src="resources/chapter_0_illustration.png" width="50%" alt="Generated Illustration for Grimm's Fairy Tales Chapter 0" />
-    <img src="resources/chapter_3_illustration.png" width="50%" alt="Generated Illustration for Grimm's Fairy Tales Chapter 3" />
+Inkbloom uses advanced AI models to analyze your ebook chapters, extract character and scene descriptions, and generate custom illustrations in your chosen artistic style. Perfect for enhancing public domain works, personal projects, or creating illustrated editions of your favorite stories.
 
-## Features
+**Example expired U.S. Copyright epubs from Project Gutenberg are included in the repo to try out.**
 
-- Automatically extracts character and scene descriptions from chapters using Anthropic's Claude
-- Generates AI illustrations using OpenAI's DALL-E 3
-- Maintains consistency across illustrations throughout the book
-- Supports custom illustration styles
-- Creates a new EPUB with illustrations embedded
+### 🖼️ Example Illustrations
 
-## Requirements
+*AI-generated illustrations for Grimm's Fairy Tales using DALL-E 3, visualized using Calibre*
+
+<p align="center">
+  <img src="resources/illustration_brothersgrimm_0.png" width="45%" alt="Generated Illustration for Grimm's Fairy Tales The Golden Bird" />
+  <img src="resources/illustration_brothersgrimm_3.png" width="45%" alt="Generated Illustration for Grimm's Fairy Tales Old Sultan" />
+</p>
+
+---
+
+## 🚀 Features
+
+- 🤖 **Smart Analysis** - Automatically extracts character and scene descriptions using Claude AI
+- 🎨 **Custom Styles** - Generate illustrations in any artistic style (watercolor, oil painting, cartoon, etc.)
+- 📚 **Consistent Output** - Maintains visual consistency across all chapter illustrations
+- ⚡ **Simple Integration** - Creates a new EPUB with illustrations seamlessly embedded
+- 🎯 **Chapter-Aware** - Intelligently selects the most representative scene from each chapter
+
+## 📋 Requirements
 
 - Python 3.x
-- API keys for:
-  - Anthropic (Claude API)
-  - OpenAI (DALL-E API)
+- API keys:
+  - [Anthropic API](https://console.anthropic.com/) (Claude)
+  - [OpenAI API](https://platform.openai.com/) (DALL-E 3)
 
-## Installation
+---
 
-Install the required dependencies:
+## 🛠️ Installation
+
+### 1. Install Dependencies
 
 ```bash
 pip install anthropic ebooklib beautifulsoup4 openai requests pillow pyyaml
 ```
 
-## Setup
+### 2. Configure API Keys
 
-Create API key files in `~/.secret/`:
+Create a `~/.secret/` directory and add your API key files:
 
-1. Create `anthropic_api_key.json`:
+**`~/.secret/anthropic_api_key.json`**
 ```json
 {
   "SECRET_KEY": "your-anthropic-api-key-here"
 }
 ```
 
-2. Create `openai_api_key.json`:
+**`~/.secret/openai_api_key.json`**
 ```json
 {
   "SECRET_KEY": "your-openai-api-key-here"
 }
 ```
 
-## Usage
+---
 
-Run inkbloom from the command line:
+## 📖 Usage
+
+### Basic Command
 
 ```bash
 python inkbloom.py <ebook_file> <style>
 ```
 
-### Arguments
+### Parameters
 
-- `ebook_file`: Path to your EPUB file
-- `style`: The artistic style for illustrations (e.g., "watercolor", "oil painting", "cartoon", "pencil sketch")
+| Parameter | Description | Example Values |
+|-----------|-------------|----------------|
+| `ebook_file` | Path to your EPUB file | `"my_book.epub"` |
+| `style` | Artistic style for illustrations | `"watercolor"`, `"oil painting"`, `"cartoon"`, `"pencil sketch"` |
 
 ### Example
 
@@ -72,46 +89,78 @@ python inkbloom.py <ebook_file> <style>
 python inkbloom.py "my_book.epub" "watercolor"
 ```
 
-This will:
-1. Read and analyze each chapter of `my_book.epub`
-2. Extract character and scene descriptions
-3. Generate watercolor-style illustrations for each chapter
-4. Create a new file: `my_book WITH PICTURES.epub`
+**What happens:**
+1. 📖 Reads and analyzes each chapter of your ebook
+2. 🔍 Extracts character and scene descriptions
+3. 🎨 Generates watercolor-style illustrations for each chapter
+4. 💾 Creates: `my_book WITH PICTURES.epub`
 
-## How It Works
+---
 
-1. **Chapter Analysis**: Claude AI analyzes each chapter to identify character physical descriptions and scenes
-2. **Scene Selection**: The AI selects the most representative scene from each chapter
-3. **Prompt Generation**: Creates detailed image generation prompts combining character descriptions with scene context
-4. **Image Generation**: DALL-E 3 generates illustrations based on the prompts
-5. **EPUB Creation**: Illustrations are inserted at the beginning of each chapter (after the chapter heading)
-6. **Output**: A new EPUB file is created with " WITH PICTURES" appended to the original filename
+## ⚙️ How It Works
 
-## Notes
+```mermaid
+graph LR
+    A[📚 EPUB Input] --> B[🤖 Claude Analysis]
+    B --> C[🎯 Scene Selection]
+    C --> D[✍️ Prompt Generation]
+    D --> E[🎨 DALL-E Generation]
+    E --> F[📘 EPUB Creation]
+    F --> G[✅ Illustrated Book]
+```
 
-- Illustrations are generated for chapters longer than 1000 characters
-- Title pages and blank pages are skipped
-- All content is filtered to be appropriate for children's books
-- Images are saved as PNG files (1024x1024 pixels)
-- The process uses API calls which may incur costs
+1. **Chapter Analysis** - Claude AI identifies character physical descriptions and scenes
+2. **Scene Selection** - AI selects the most representative scene from each chapter
+3. **Prompt Generation** - Creates detailed prompts combining character descriptions with scene context
+4. **Image Generation** - DALL-E 3 generates illustrations based on the prompts
+5. **EPUB Creation** - Illustrations are inserted after chapter headings
+6. **Output** - New EPUB file created with " WITH PICTURES" appended to filename
 
-## Generated Files
+---
 
-During execution, the following files are created:
-- `chapter_N_illustration.png`: Individual illustration files for each chapter
-- `<original_filename> WITH PICTURES.epub`: The final ebook with illustrations
+## 📝 Important Notes
 
-## Limitations
+| Aspect | Details |
+|--------|---------|
+| **Chapter Length** | Only chapters longer than 1,000 characters receive illustrations |
+| **Skipped Content** | Title pages and blank pages are automatically skipped |
+| **Image Format** | PNG files at 1024x1024 pixels |
+| **Content Filtering** | All content is filtered to be family-friendly |
+| **API Costs** | Usage incurs costs from both Anthropic and OpenAI |
 
-- Only works with EPUB format
-- Requires active internet connection for API calls
-- API rate limits may affect processing speed
-- Image generation costs apply based on OpenAI pricing
+### Generated Files
 
-## Ideas for Future Improvements
+- `chapter_N_illustration.png` - Individual illustration files for each chapter
+- `<original_filename> WITH PICTURES.epub` - Your new illustrated ebook
 
-- Support for different ebook formats
-- Multi-language support with translation
-- Additional image style options
-- Batch processing multiple books
-- Character consistency tracking across chapters
+---
+
+## ⚠️ Limitations
+
+- ✓ EPUB format only (no support for MOBI, PDF, etc.)
+- ✓ Requires active internet connection (relies on model APIs)
+- ✓ Subject to API rate limits
+- ✓ Image generation costs apply
+
+---
+
+## 💡 Future Ideas
+
+- [ ] Support for additional ebook formats (MOBI, PDF)
+- [ ] Multi-language support with automatic translation
+- [ ] Expanded image style library
+- [ ] Batch processing for multiple books
+- [ ] Enhanced character consistency tracking
+- [ ] Local LLM support to reduce API costs
+
+---
+
+## 📄 License
+
+This project works with public domain books (expired U.S. Copyright). Always ensure you have the right to modify and redistribute any ebook you process.
+
+---
+
+<p align="center">
+  Made with ❤️ using Claude AI & DALL-E 3
+</p>
