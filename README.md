@@ -101,10 +101,10 @@ python inkbloom.py "my_book.epub" "watercolor"
 
 ```mermaid
 graph LR
-    A[📚 EPUB Input] --> B[🤖 Claude Analysis]
+    A[📚 EPUB Input] --> B[🤖 Claude Chapter Analysis]
     B --> C[🎯 Scene Selection]
     C --> D[✍️ Prompt Generation]
-    D --> E[🎨 DALL-E Generation]
+    D --> E[🎨 DALL-E Image Generation]
     E --> F[📘 EPUB Creation]
     F --> G[✅ Illustrated Book]
 ```
