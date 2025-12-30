@@ -14,6 +14,7 @@ from openai import (
 import requests
 from PIL import Image
 from io import BytesIO
+import os
 
 # from transformers import AutoTokenizer, pipeline
 from typing import List, Tuple, Dict
@@ -39,6 +40,7 @@ class EpubReader:
         self.load_keys()
         self.description_dict = {}
         self.style = style
+        self.image_outdir = "generated_illustrations/"
 
     def load_keys(self):
         """Load API keys"""
@@ -107,7 +109,7 @@ class EpubReader:
 
         query = starter_text + chapter
         message = client.messages.create(
-            model="claude-3-5-sonnet-20241022",
+            model="claude-sonnet-4-5-20250929",
             max_tokens=1000,
             temperature=0,
             system=system_prompt,
@@ -143,7 +145,7 @@ class EpubReader:
                         offensive, ensuring the image aligns with content policies."""
 
         message = client.messages.create(
-            model="claude-3-5-sonnet-20241022",
+            model="claude-sonnet-4-5-20250929",
             max_tokens=1000,
             temperature=0,
             system=system_prompt,
@@ -193,7 +195,7 @@ class EpubReader:
         # Append the Image object to the list
         image_object = Image.open(BytesIO(response.content))
         image_filename = f"chapter_{chapter_num}_illustration.png"
-        image_object.save(image_filename)
+        image_object.save(os.path.join(self.image_outdir, image_filename))
 
     def add_image_to_content(self, chapter_content, chapter_num):
         """Add illustration image to chapter content"""
@@ -246,7 +248,9 @@ class EpubReader:
                             chapter_num,
                         )
                     )
-                    image_filename = f"chapter_{chapter_num}_illustration.png"
+                    image_filename = os.path.join(
+                        self.image_outdir, f"chapter_{chapter_num}_illustration.png"
+                    )
                     image_content = open(image_filename, "rb").read()
                     img = epub.EpubImage(
                         uid=f"image_{chapter_num}",
@@ -281,7 +285,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("ebook")
-    parser.add_argument('style')
+    parser.add_argument("style")
 
     args = parser.parse_args()
 
