@@ -32,6 +32,7 @@ class EpubReader:
         self,
         ebook_filepath: str,
         style: str,
+        api_keys_filepath: str = None,
     ):
         self.ebook_filepath = ebook_filepath
         self.book = epub.read_epub(ebook_filepath)
@@ -41,12 +42,15 @@ class EpubReader:
         self.description_dict = {}
         self.style = style
         self.image_outdir = "generated_illustrations/"
+        self.api_keys_filepath = api_keys_filepath
+        if not os.path.exists(self.image_outdir):  # make directory if it doesn't exist
+            os.makedirs(self.image_outdir)
 
     def load_keys(self):
         """Load API keys"""
-        with open("/Users/minty/.secret/anthropic_api_key.json") as f:
+        with open(os.path.join(self.api_keys_filepath, "anthropic_api_key.json")) as f:
             self.claude_key = json.load(f)["SECRET_KEY"]
-        with open("/Users/minty/.secret/openai_api_key.json") as f:
+        with open(os.path.join(self.api_keys_filepath, "openai_api_key.json")) as f:
             self.openai_key = json.load(f)["SECRET_KEY"]
 
     def chapter_to_str(self, chapter):
