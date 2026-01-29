@@ -1,4 +1,4 @@
-# 🎨 inkbloom
+# inkbloom
 
 > Transform your ebooks into illustrated masterpieces using AI
 
@@ -6,13 +6,13 @@ Inkbloom automatically generates and inserts contextually appropriate illustrati
 
 ---
 
-## ✨ Overview
+## Overview
 
 Inkbloom uses advanced AI models to analyze your ebook chapters, extract character and scene descriptions, and generate custom illustrations in your chosen artistic style. Perfect for enhancing public domain works, personal projects, or creating illustrated editions of your favorite stories.
 
 **Example expired U.S. Copyright epubs from Project Gutenberg are included in the repo to try out.**
 
-### 🖼️ Example Illustrations
+### Example Illustrations
 
 *AI-generated illustrations for Grimm's Fairy Tales using DALL-E 3, visualized using Calibre*
 
@@ -23,15 +23,15 @@ Inkbloom uses advanced AI models to analyze your ebook chapters, extract charact
 
 ---
 
-## 🚀 Features
+## Features
 
-- 🤖 **Smart Analysis** - Automatically extracts character and scene descriptions using Claude AI
-- 🎨 **Custom Styles** - Generate illustrations in any artistic style (watercolor, oil painting, cartoon, etc.)
-- 📚 **Consistent Output** - Maintains visual consistency across all chapter illustrations
-- ⚡ **Simple Integration** - Creates a new EPUB with illustrations seamlessly embedded
-- 🎯 **Chapter-Aware** - Intelligently selects the most representative scene from each chapter
+- Automatically extracts character and scene descriptions using Claude AI
+- Generate illustrations in any artistic style (watercolor, oil painting, cartoon, etc.)
+- Maintains visual consistency across all chapter illustrations
+- Creates a new EPUB with illustrations seamlessly embedded
+- Intelligently selects the most representative scene from each chapter
 
-## 📋 Requirements
+## Requirements
 
 - Python 3.x
 - API keys:
@@ -40,7 +40,7 @@ Inkbloom uses advanced AI models to analyze your ebook chapters, extract charact
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### 1. Install Dependencies
 
@@ -68,7 +68,7 @@ Create a `~/.secret/` directory and add your API key files:
 
 ---
 
-## 📖 Usage
+## Usage
 
 ### Basic Command
 
@@ -89,44 +89,20 @@ python inkbloom.py <ebook_file> <style>
 python inkbloom.py "my_book.epub" "watercolor"
 ```
 
-**What happens:**
-1. 📖 Reads and analyzes each chapter of your ebook
-2. 🔍 Extracts character and scene descriptions
-3. 🎨 Generates watercolor-style illustrations for each chapter
-4. 💾 Creates: `my_book WITH PICTURES.epub`
+## How It Works
+
+1. Claude identifies character physical descriptions and scenes
+2. Claude selects the most representative scene from each chapter
+3. Creates detailed prompts combining character descriptions with scene context
+4. DALL-E generates illustrations based on the prompts
+5. Illustrations are inserted after chapter headings
+6. New EPUB file created with " WITH PICTURES" appended to filename
 
 ---
 
-## ⚙️ How It Works
-
-```mermaid
-graph LR
-    A[📚 EPUB Input] --> B[🤖 Claude Chapter Analysis]
-    B --> C[🎯 Scene Selection]
-    C --> D[✍️ Prompt Generation]
-    D --> E[🎨 DALL-E Image Generation]
-    E --> F[📘 EPUB Creation]
-    F --> G[✅ Illustrated Book]
-```
-
-1. **Chapter Analysis** - Claude AI identifies character physical descriptions and scenes
-2. **Scene Selection** - AI selects the most representative scene from each chapter
-3. **Prompt Generation** - Creates detailed prompts combining character descriptions with scene context
-4. **Image Generation** - DALL-E 3 generates illustrations based on the prompts
-5. **EPUB Creation** - Illustrations are inserted after chapter headings
-6. **Output** - New EPUB file created with " WITH PICTURES" appended to filename
-
----
-
-## 📝 Important Notes
-
-| Aspect | Details |
-|--------|---------|
-| **Chapter Length** | Only chapters longer than 1,000 characters receive illustrations |
-| **Skipped Content** | Title pages and blank pages are automatically skipped |
-| **Image Format** | PNG files at 1024x1024 pixels |
-| **Content Filtering** | All content is filtered to be family-friendly |
-| **API Costs** | Usage incurs costs from both Anthropic and OpenAI |
+## Notes
+* All content is filtered to be family-friendly (scary books/chapters will trigger the LLM's content errors)
+* Usage incurs costs from both Anthropic and OpenAI 
 
 ### Generated Files
 
@@ -135,27 +111,16 @@ graph LR
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
-- ✓ EPUB format only (no support for MOBI, PDF, etc.)
-- ✓ Requires active internet connection (relies on model APIs)
-- ✓ Subject to API rate limits
-- ✓ Image generation costs apply
-
----
-
-## 💡 Future Ideas
-
-- [ ] Support for additional ebook formats (MOBI, PDF)
-- [ ] Multi-language support with automatic translation
-- [ ] Expanded image style library
-- [ ] Batch processing for multiple books
-- [ ] Enhanced character consistency tracking
-- [ ] Local LLM support to reduce API costs
+- EPUB format only (no support for MOBI, PDF, etc.)
+- Requires active internet connection (relies on model APIs)
+- Subject to API rate limits
+- LLM API costs apply
 
 ---
 
-## 📄 License
+## License
 
 This project works with public domain books (expired U.S. Copyright). Always ensure you have the right to modify and redistribute any ebook you process.
 
